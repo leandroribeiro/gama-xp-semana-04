@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+        console.log('comecou');
+        /**
+         * This javascript file checks for the brower/browser tab action.
+         * It is based on the file menstioned by Daniel Melo.
+         * Reference: http://stackoverflow.com/questions/1921941/close-kill-the-session-when-the-browser-or-tab-is-closed
+         */
+        var validNavigation = false;
+
+        function wireUpEvents() {
+            console.log('wireUpEvents');
+            /**
+             * For a list of events that triggers onbeforeunload on IE
+             * check http://msdn.microsoft.com/en-us/library/ms536907(VS.85).aspx
+             *
+             * onbeforeunload for IE and chrome
+             * check http://stackoverflow.com/questions/1802930/setting-onbeforeunload-on-body-element-in-chrome-and-ie-using-jquery
+             */
+            var dont_confirm_leave = 0; //set dont_confirm_leave to 1 when you want the user to be able to leave withou confirmation
+            var leave_message = 'You sure you want to leave?'
+
+            function goodbye(e) {
+                if (!validNavigation) {
+                    if (dont_confirm_leave !== 1) {
+                        if (!e) e = window.event;
+                        //e.cancelBubble is supported by IE - this will kill the bubbling process.
+                        e.cancelBubble = true;
+                        e.returnValue = leave_message;
+                        //e.stopPropagation works in Firefox.
+                        if (e.stopPropagation) {
+                            e.stopPropagation();
+                            e.preventDefault();
+                        }
+                        //return works for Chrome and Safari
+                        return leave_message;
+                    }
+                }
+            }
+            window.onbeforeunload = goodbye;
+
+            // Attach the event keypress to exclude the F5 refresh
+            $(document).bind('keypress', function(e) {
+                if (e.keyCode == 116) {
+                    validNavigation = true;
+                }
+            });
+
+            // Attach the event click for all links in the page
+            $("a").bind("click", function() {
+                validNavigation = true;
+            });
+
+            // Attach the event submit for all forms in the page
+            $("form").bind("submit", function() {
+                validNavigation = true;
+            });
+
+            // Attach the event click for all inputs in the page
+            $("input[type=submit]").bind("click", function() {
+                validNavigation = true;
+            });
+
+        }
+
+        // Wire up the events as soon as the DOM tree is ready
+        $(document).ready(function() {
+            wireUpEvents();
+        });
+    </script>
+    <script type="text/javascript">
+        var saiu = 0;
+        var entrou = 0;
+
+        //https://greensock.com/forums/topic/9059-cross-browser-to-detect-tab-or-window-is-active-so-animations-stay-in-sync-using-html5-visibility-api/
+
+        // check if browser window has focus
+        var notIE = (document.documentMode === undefined),
+            isChromium = window.chrome;
+
+        if (notIE && !isChromium) {
+
+            // checks for Firefox and other  NON IE Chrome versions
+            $(window).on("focusin", function() {
+
+                // tween resume() code goes here
+                setTimeout(function() {
+                    atualizaEstatisticaDeEntrou();
+                }, 300);
+
+            }).on("focusout", function() {
+
+                atualizaEstatisticaDeSaiu();
+
+            });
+
+        } else {
+
+            // checks for IE and Chromium versions
+            if (window.addEventListener) {
+
+                // bind focus event
+                window.addEventListener("focus", function(event) {
+
+                    // tween resume() code goes here
+                    setTimeout(function() {
+                        atualizaEstatisticaDeEntrou();
+                    }, 300);
+
+                }, false);
+
+                // bind blur event
+                window.addEventListener("blur", function(event) {
+
+                    atualizaEstatisticaDeSaiu();
+
+                }, false);
+
+            } else {
+
+                // bind focus event
+                window.attachEvent("focus", function(event) {
+
+                    // tween resume() code goes here
+                    setTimeout(function() {
+                        atualizaEstatisticaDeEntrou();
+                    }, 300);
+
+                });
+
+                // bind focus event
+                window.attachEvent("blur", function(event) {
+                    atualizaEstatisticaDeSaiu();
+                });
+            }
+        }
+
+        function atualizaEstatisticaDeSaiu() {
+            saiu += 1;
+            $("#quantidadeVezesSaiu").text(saiu);
+        }
+
+        function atualizaEstatisticaDeEntrou() {
+            entrou += 1;
+            $("#quantidadeVezesEntrou").text(saiu);
+        }
+
+    </script>
+</head>
+
+<body>
+    <!--
+https://greensock.com/forums/topic/9059-cross-browser-to-detect-tab-or-window-is-active-so-animations-stay-in-sync-using-html5-visibility-api/
+
+ -->
+    <h1>Saiu : <span id="quantidadeVezesSaiu"></span></h1>
+    <h1>Entrou : <span id="quantidadeVezesEntrou"></span></h1>
+</body>
+
+</html>
