@@ -6,76 +6,65 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+</head>
+
+<body>
+    <!--
+https://greensock.com/forums/topic/9059-cross-browser-to-detect-tab-or-window-is-active-so-animations-stay-in-sync-using-html5-visibility-api/
+
+ -->
+
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/ycPIaaKCyDQ" frameborder="0" allowfullscreen></iframe>
+
+    <h3>Tempo de Transmissão : <span id="tempoDeTransmissao"></span></h3>
+    <h3>Tempo Ativo na Transmissão : <span id="tempoAtivoDeTransmissão"></span></h3>
+
+    <h3>Saiu : <span id="quantidadeVezesSaiu"></span></h3>
+    <h3>Entrou : <span id="quantidadeVezesEntrou"></span></h3>
+
+
     <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+
     <script type="text/javascript">
-        console.log('comecou');
-        /**
-         * This javascript file checks for the brower/browser tab action.
-         * It is based on the file menstioned by Daniel Melo.
-         * Reference: http://stackoverflow.com/questions/1921941/close-kill-the-session-when-the-browser-or-tab-is-closed
-         */
-        var validNavigation = false;
 
-        function wireUpEvents() {
-            console.log('wireUpEvents');
-            /**
-             * For a list of events that triggers onbeforeunload on IE
-             * check http://msdn.microsoft.com/en-us/library/ms536907(VS.85).aspx
-             *
-             * onbeforeunload for IE and chrome
-             * check http://stackoverflow.com/questions/1802930/setting-onbeforeunload-on-body-element-in-chrome-and-ie-using-jquery
-             */
-            var dont_confirm_leave = 0; //set dont_confirm_leave to 1 when you want the user to be able to leave withou confirmation
-            var leave_message = 'You sure you want to leave?'
+    var tempo = new Number();
 
-            function goodbye(e) {
-                if (!validNavigation) {
-                    if (dont_confirm_leave !== 1) {
-                        if (!e) e = window.event;
-                        //e.cancelBubble is supported by IE - this will kill the bubbling process.
-                        e.cancelBubble = true;
-                        e.returnValue = leave_message;
-                        //e.stopPropagation works in Firefox.
-                        if (e.stopPropagation) {
-                            e.stopPropagation();
-                            e.preventDefault();
-                        }
-                        //return works for Chrome and Safari
-                        return leave_message;
-                    }
-                }
-            }
-            window.onbeforeunload = goodbye;
+    // Tempo em segundos
+    tempo = 0;
 
-            // Attach the event keypress to exclude the F5 refresh
-            $(document).bind('keypress', function(e) {
-                if (e.keyCode == 116) {
-                    validNavigation = true;
-                }
-            });
+    function startCountdown(){
 
-            // Attach the event click for all links in the page
-            $("a").bind("click", function() {
-                validNavigation = true;
-            });
+    		// Pega a parte inteira dos minutos
+    		var min = parseInt(tempo/60);
+    		// Calcula os segundos restantes
+    		var seg = tempo%60;
 
-            // Attach the event submit for all forms in the page
-            $("form").bind("submit", function() {
-                validNavigation = true;
-            });
+    		// Formata o número menor que dez, ex: 08, 07, ...
+    		if(min < 10){
+    			min = "0"+min;
+    			min = min.substr(0, 2);
+    		}
+    		if(seg <=9){
+    			seg = "0"+seg;
+    		}
 
-            // Attach the event click for all inputs in the page
-            $("input[type=submit]").bind("click", function() {
-                validNavigation = true;
-            });
+    		// Cria a variável para formatar no estilo hora/cronômetro
+    		horaImprimivel = '00:' + min + ':' + seg;
+    		//JQuery pra setar o valor
+    		$("#tempoDeTransmissao").html(horaImprimivel);
 
-        }
+    		// Define que a função será executada novamente em 1000ms = 1 segundo
+    		setTimeout('startCountdown()',1000);
 
-        // Wire up the events as soon as the DOM tree is ready
-        $(document).ready(function() {
-            wireUpEvents();
-        });
+    		// diminui o tempo
+    		tempo++;
+    }
+
+    // Chama a função ao carregar a tela
+    startCountdown();
+
     </script>
+
     <script type="text/javascript">
         var saiu = 0;
         var entrou = 0;
@@ -152,17 +141,9 @@
             entrou += 1;
             $("#quantidadeVezesEntrou").text(saiu);
         }
-
     </script>
-</head>
 
-<body>
-    <!--
-https://greensock.com/forums/topic/9059-cross-browser-to-detect-tab-or-window-is-active-so-animations-stay-in-sync-using-html5-visibility-api/
 
- -->
-    <h1>Saiu : <span id="quantidadeVezesSaiu"></span></h1>
-    <h1>Entrou : <span id="quantidadeVezesEntrou"></span></h1>
 </body>
 
 </html>
