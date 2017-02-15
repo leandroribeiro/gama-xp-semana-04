@@ -10,11 +10,21 @@ function configurarFirebase() {
     firebase.initializeApp(config);
 }
 
+function getUrlParameter(name) {
+    name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+    var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+    var results = regex.exec(location.search);
+    return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+};
+
 function atualizarRegistroDeTransmissao(streamId, userId, qtdDeixouPagina) {
+    
     firebase.database().ref('transmissao/' + streamId).update({ qtd_deixou_pagina: qtdDeixouPagina });
+
 }
 
 function inserirRegistroDeTransmissao(streamId, userId, inicioDaTransmissao) {
+
     firebase.database().ref('transmissao/' + streamId).set({
         user_id: userId,
         inicio_transmissao: inicioDaTransmissao,
@@ -27,7 +37,7 @@ function registrarInicioDaTransmissao() {
 
     var inicioDaTransmissao = new Date();
 
-    var streamId = $("#streamId").val();
+    var streamId = getUrlParameter('transmissaoId');
     var userId = $("#userId").val();
 
     inserirRegistroDeTransmissao(streamId, userId, inicioDaTransmissao.toString());
@@ -68,9 +78,9 @@ function iniciarContador() {
 
 function atualizaEstatisticaDeSaiu() {
     saiu += 1;
-    $("#quantidadeVezesSaiu").text(saiu);
+    $("#quantidadeVezesSaiu").attr('value', saiu);
 
-    var streamId = $("#streamId").val();
+    var streamId = getUrlParameter('transmissaoId');
     var userId = $("#userId").val();
 
     atualizarRegistroDeTransmissao(streamId, userId, saiu);
@@ -78,7 +88,7 @@ function atualizaEstatisticaDeSaiu() {
 
 function atualizaEstatisticaDeEntrou() {
     entrou += 1;
-    $("#quantidadeVezesEntrou").text(saiu);
+    $("#quantidadeVezesEntrou").attr('value', entrou);
 }
 
 // Chama a função ao carregar a tela

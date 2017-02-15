@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>NetShow.Me - Transmissão A Vivo</title>
 </head>
 
 <body>
@@ -14,18 +14,15 @@ https://greensock.com/forums/topic/9059-cross-browser-to-detect-tab-or-window-is
 
  -->
     <form>
-        <input type="hidden" id="streamId" name="streamId" value="100" />
         <input type="hidden" id="userId" name="userId" value="1" />
+        <input type="hidden" id="tempoAtivoDeTransmissão" name="tempoAtivoDeTransmissão" value="" />
+        <input type="hidden" id="quantidadeVezesSaiu" name="quantidadeVezesSaiu" value="" />
+        <input type="hidden" id="quantidadeVezesEntrou" name="quantidadeVezesEntrou" value="" />
     </form>
 
     <iframe width="560" height="315" src="https://www.youtube.com/embed/ycPIaaKCyDQ" frameborder="0" allowfullscreen></iframe>
 
     <h3>Tempo de Transmissão : <span id="tempoDeTransmissao"></span></h3>
-    <h3>Tempo Ativo na Transmissão : <span id="tempoAtivoDeTransmissão"></span></h3>
-
-    <h3>Saiu : <span id="quantidadeVezesSaiu"></span></h3>
-    <h3>Entrou : <span id="quantidadeVezesEntrou"></span></h3>
-
 
     <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
         crossorigin="anonymous"></script>
