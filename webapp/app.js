@@ -1,3 +1,13 @@
+var tempo = new Number();
+
+// Tempo em segundos
+tempo = 0;
+
+var contadorDeTempoAtivo;
+var tempoAtivo = new Number();
+
+tempoAtivo = 0;
+
 function configurarFirebase() {
     // Initialize Firebase
     var config = {
@@ -10,6 +20,7 @@ function configurarFirebase() {
     firebase.initializeApp(config);
 }
 
+// https://davidwalsh.name/query-string-javascript
 function getUrlParameter(name) {
     name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
     var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
@@ -40,11 +51,6 @@ function registrarInicioDaTransmissao() {
     inserirRegistroDeTransmissao(streamId, userId, inicioDaTransmissao.toString());
 }
 
-var tempo = new Number();
-
-// Tempo em segundos
-tempo = 0;
-
 function iniciarContador() {
 
     // Pega a parte inteira dos minutos
@@ -62,7 +68,7 @@ function iniciarContador() {
     }
 
     // Cria a variável para formatar no estilo hora/cronômetro
-    horaImprimivel = '00:' + min + ':' + seg;
+    var horaImprimivel = '00:' + min + ':' + seg;
     //JQuery pra setar o valor
     $("#tempoDeTransmissao").html(horaImprimivel);
 
@@ -73,9 +79,44 @@ function iniciarContador() {
     tempo++;
 }
 
+function iniciarContadorDeTempoAtivo() {
+
+    // Pega a parte inteira dos minutos
+    var min = parseInt(tempoAtivo / 60);
+    // Calcula os segundos restantes
+    var seg = tempoAtivo % 60;
+
+    // Formata o número menor que dez, ex: 08, 07, ...
+    if (min < 10) {
+        min = "0" + min;
+        min = min.substr(0, 2);
+    }
+    if (seg <= 9) {
+        seg = "0" + seg;
+    }
+
+    // Cria a variável para formatar no estilo hora/cronômetro
+    var horaImprimivel = '00:' + min + ':' + seg;
+    //JQuery pra setar o valor
+    $("#tempoDeTransmissaoAtivo").html(horaImprimivel);
+
+    clearTimeout(contadorDeTempoAtivo);
+    
+    // Define que a função será executada novamente em 1000ms = 1 segundo
+    contadorDeTempoAtivo = setTimeout('iniciarContadorDeTempoAtivo()', 1000);
+
+    // diminui o tempoAtivo
+    tempoAtivo++;
+}
+function pararContadorDeTempoAtivo() {
+    clearTimeout(contadorDeTempoAtivo);
+}
+
 function atualizaEstatisticaDeSaiu() {
     saiu += 1;
     $("#quantidadeVezesSaiu").attr('value', saiu);
+
+    pararContadorDeTempoAtivo();
 
     var streamId = getUrlParameter('transmissaoId');
     var userId = $("#userId").val();
@@ -86,10 +127,14 @@ function atualizaEstatisticaDeSaiu() {
 function atualizaEstatisticaDeEntrou() {
     entrou += 1;
     $("#quantidadeVezesEntrou").attr('value', entrou);
+
+    iniciarContadorDeTempoAtivo();
 }
 
 // Chama a função ao carregar a tela
 iniciarContador();
+
+iniciarContadorDeTempoAtivo();
 
 configurarFirebase();
 
