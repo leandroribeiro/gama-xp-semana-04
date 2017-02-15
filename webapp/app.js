@@ -29,7 +29,12 @@ function getUrlParameter(name) {
 };
 
 function atualizarRegistroDeTransmissao(streamId, userId, qtdDeixouPagina) {
-    firebase.database().ref('transmissao/' + streamId).update({ qtd_deixou_pagina: qtdDeixouPagina });
+    firebase.database().ref('transmissao/' + streamId).update(
+        {
+            qtd_deixou_pagina: qtdDeixouPagina,
+            tempo_transmissao: tempo,
+            tempo_transmissao_ativa: tempoAtivo
+        });
 
 }
 
@@ -37,7 +42,9 @@ function inserirRegistroDeTransmissao(streamId, userId, inicioDaTransmissao) {
     firebase.database().ref('transmissao/' + streamId).set({
         user_id: userId,
         inicio_transmissao: inicioDaTransmissao,
-        qtd_deixou_pagina: 0
+        qtd_deixou_pagina: 0,
+        tempo_transmissao: 0,
+        tempo_transmissao_ativa: 0
     });
 
 };
@@ -101,7 +108,7 @@ function iniciarContadorDeTempoAtivo() {
     $("#tempoDeTransmissaoAtivo").html(horaImprimivel);
 
     clearTimeout(contadorDeTempoAtivo);
-    
+
     // Define que a função será executada novamente em 1000ms = 1 segundo
     contadorDeTempoAtivo = setTimeout('iniciarContadorDeTempoAtivo()', 1000);
 
