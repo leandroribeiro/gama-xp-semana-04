@@ -18,23 +18,20 @@ function getUrlParameter(name) {
 };
 
 function atualizarRegistroDeTransmissao(streamId, userId, qtdDeixouPagina) {
-    
     firebase.database().ref('transmissao/' + streamId).update({ qtd_deixou_pagina: qtdDeixouPagina });
 
 }
 
 function inserirRegistroDeTransmissao(streamId, userId, inicioDaTransmissao) {
-
     firebase.database().ref('transmissao/' + streamId).set({
         user_id: userId,
         inicio_transmissao: inicioDaTransmissao,
-        qtdDeixouPagina: 0
+        qtd_deixou_pagina: 0
     });
 
 };
 
 function registrarInicioDaTransmissao() {
-
     var inicioDaTransmissao = new Date();
 
     var streamId = getUrlParameter('transmissaoId');
