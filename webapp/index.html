@@ -13,6 +13,10 @@
 https://greensock.com/forums/topic/9059-cross-browser-to-detect-tab-or-window-is-active-so-animations-stay-in-sync-using-html5-visibility-api/
 
  -->
+    <form>
+        <input type="hidden" id="streamId" name="streamId" value="100" />
+        <input type="hidden" id="userId" name="userId" value="1" />
+    </form>
 
     <iframe width="560" height="315" src="https://www.youtube.com/embed/ycPIaaKCyDQ" frameborder="0" allowfullscreen></iframe>
 
@@ -23,126 +27,10 @@ https://greensock.com/forums/topic/9059-cross-browser-to-detect-tab-or-window-is
     <h3>Entrou : <span id="quantidadeVezesEntrou"></span></h3>
 
 
-    <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
-
-    <script type="text/javascript">
-
-    var tempo = new Number();
-
-    // Tempo em segundos
-    tempo = 0;
-
-    function startCountdown(){
-
-    		// Pega a parte inteira dos minutos
-    		var min = parseInt(tempo/60);
-    		// Calcula os segundos restantes
-    		var seg = tempo%60;
-
-    		// Formata o número menor que dez, ex: 08, 07, ...
-    		if(min < 10){
-    			min = "0"+min;
-    			min = min.substr(0, 2);
-    		}
-    		if(seg <=9){
-    			seg = "0"+seg;
-    		}
-
-    		// Cria a variável para formatar no estilo hora/cronômetro
-    		horaImprimivel = '00:' + min + ':' + seg;
-    		//JQuery pra setar o valor
-    		$("#tempoDeTransmissao").html(horaImprimivel);
-
-    		// Define que a função será executada novamente em 1000ms = 1 segundo
-    		setTimeout('startCountdown()',1000);
-
-    		// diminui o tempo
-    		tempo++;
-    }
-
-    // Chama a função ao carregar a tela
-    startCountdown();
-
-    </script>
-
-    <script type="text/javascript">
-        var saiu = 0;
-        var entrou = 0;
-
-        //https://greensock.com/forums/topic/9059-cross-browser-to-detect-tab-or-window-is-active-so-animations-stay-in-sync-using-html5-visibility-api/
-
-        // check if browser window has focus
-        var notIE = (document.documentMode === undefined),
-            isChromium = window.chrome;
-
-        if (notIE && !isChromium) {
-
-            // checks for Firefox and other  NON IE Chrome versions
-            $(window).on("focusin", function() {
-
-                // tween resume() code goes here
-                setTimeout(function() {
-                    atualizaEstatisticaDeEntrou();
-                }, 300);
-
-            }).on("focusout", function() {
-
-                atualizaEstatisticaDeSaiu();
-
-            });
-
-        } else {
-
-            // checks for IE and Chromium versions
-            if (window.addEventListener) {
-
-                // bind focus event
-                window.addEventListener("focus", function(event) {
-
-                    // tween resume() code goes here
-                    setTimeout(function() {
-                        atualizaEstatisticaDeEntrou();
-                    }, 300);
-
-                }, false);
-
-                // bind blur event
-                window.addEventListener("blur", function(event) {
-
-                    atualizaEstatisticaDeSaiu();
-
-                }, false);
-
-            } else {
-
-                // bind focus event
-                window.attachEvent("focus", function(event) {
-
-                    // tween resume() code goes here
-                    setTimeout(function() {
-                        atualizaEstatisticaDeEntrou();
-                    }, 300);
-
-                });
-
-                // bind focus event
-                window.attachEvent("blur", function(event) {
-                    atualizaEstatisticaDeSaiu();
-                });
-            }
-        }
-
-        function atualizaEstatisticaDeSaiu() {
-            saiu += 1;
-            $("#quantidadeVezesSaiu").text(saiu);
-        }
-
-        function atualizaEstatisticaDeEntrou() {
-            entrou += 1;
-            $("#quantidadeVezesEntrou").text(saiu);
-        }
-    </script>
-
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+        crossorigin="anonymous"></script>
+    <script src="https://www.gstatic.com/firebasejs/3.6.9/firebase.js"></script>
+    <script src="app.js"></script>
 
 </body>
 
