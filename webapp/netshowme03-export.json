@@ -1,0 +1,47 @@
+{
+  "transmissao" : {
+    "10" : {
+      "usuarios" : {
+        "1912485735" : {
+          "inicio_transmissao" : "Thu Feb 16 2017 00:40:19 GMT-0200 (BRST)",
+          "ip" : "191.248.57.35",
+          "qtd_deixou_pagina" : 1,
+          "tempo_transmissao" : 2,
+          "tempo_transmissao_ativa" : 2
+        },
+        "2019374115" : {
+          "inicio_transmissao" : "Thu Feb 16 2017 00:39:12 GMT-0200 (Horário brasileiro de verão)",
+          "ip" : "201.93.74.115",
+          "qtd_deixou_pagina" : 6,
+          "tempo_transmissao" : 50,
+          "tempo_transmissao_ativa" : 33
+        },
+        "17911017837" : {
+          "inicio_transmissao" : "Thu Feb 16 2017 00:36:48 GMT-0200 (Horário brasileiro de verão)",
+          "ip" : "179.110.178.37",
+          "qtd_deixou_pagina" : 1,
+          "tempo_transmissao" : 9,
+          "tempo_transmissao_ativa" : 9
+        }
+      }
+    },
+    "20" : {
+      "usuarios" : {
+        "1912485735" : {
+          "inicio_transmissao" : "Thu Feb 16 2017 00:40:14 GMT-0200 (BRST)",
+          "ip" : "191.248.57.35",
+          "qtd_deixou_pagina" : 1,
+          "tempo_transmissao" : 1,
+          "tempo_transmissao_ativa" : 1
+        },
+        "17911017837" : {
+          "inicio_transmissao" : "Thu Feb 16 2017 00:37:08 GMT-0200 (Horário brasileiro de verão)",
+          "ip" : "179.110.178.37",
+          "qtd_deixou_pagina" : 1,
+          "tempo_transmissao" : 1,
+          "tempo_transmissao_ativa" : 1
+        }
+      }
+    }
+  }
+}
