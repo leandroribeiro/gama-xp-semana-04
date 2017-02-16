@@ -27,10 +27,10 @@ function configurarFirebase() {
 
 function getTransmissaoId() {
 
-    var parametro = getUrlParameter('transmissao');
+    var parametro = getUrlParameter('id');
 
     if (parametro)
-        transmissaoId = getUrlParameter('transmissao');
+        transmissaoId = getUrlParameter('id');
 
     return transmissaoId;
 }
@@ -47,8 +47,8 @@ function getUrlParameter(name) {
     return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
 };
 
-function atualizarRegistroDeTransmissao(streamId, userId, qtdDeixouPagina) {
-    firebase.database().ref('transmissao/' + streamId).update(
+function atualizarRegistroDeTransmissao(transmissaoID, userID, qtdDeixouPagina) {
+    firebase.database().ref('transmissao/' + transmissaoID).update(
         {
             qtd_deixou_pagina: qtdDeixouPagina,
             tempo_transmissao: tempo,
@@ -57,9 +57,9 @@ function atualizarRegistroDeTransmissao(streamId, userId, qtdDeixouPagina) {
 
 }
 
-function inserirRegistroDeTransmissao(streamId, userId, inicioDaTransmissao) {
-    firebase.database().ref('transmissao/' + streamId).set({
-        user_id: userId,
+function inserirRegistroDeTransmissao(transmissaoID, userID, inicioDaTransmissao) {
+    firebase.database().ref('transmissao/' + transmissaoID).set({
+        user_id: userID,
         inicio_transmissao: inicioDaTransmissao,
         qtd_deixou_pagina: 0,
         tempo_transmissao: 0,
@@ -144,10 +144,10 @@ function atualizaEstatisticaDeSaiu() {
 
     pararContadorDeTempoAtivo();
 
-    var streamId = getTransmissaoId();
-    var userId = getUsuarioID();
+    var transmissaoID = getTransmissaoId();
+    var usuarioID = getUsuarioID();
 
-    atualizarRegistroDeTransmissao(streamId, userId, saiu);
+    atualizarRegistroDeTransmissao(transmissaoID, usuarioID, saiu);
 }
 
 function atualizaEstatisticaDeEntrou() {
