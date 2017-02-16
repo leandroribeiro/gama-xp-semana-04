@@ -1,3 +1,5 @@
+var userip;
+
 var tempo = new Number();
 
 // Tempo em segundos
@@ -36,7 +38,8 @@ function getTransmissaoId() {
 }
 
 function getUsuarioID() {
-    return $("#userId").val();
+    //return $("#userId").val();
+    return userip.replace(/\./g, '')
 }
 
 // https://davidwalsh.name/query-string-javascript
@@ -60,6 +63,7 @@ function atualizarRegistroDeTransmissao(transmissaoID, usuarioID, qtdDeixouPagin
 function inserirRegistroDeTransmissao(transmissaoID, usuarioID, inicioDaTransmissao) {
     firebase.database().ref('transmissao/' + transmissaoID + '/usuarios/' + usuarioID).set(
         {
+            ip: userip,
             inicio_transmissao: inicioDaTransmissao,
             qtd_deixou_pagina: 0,
             tempo_transmissao: 0,
