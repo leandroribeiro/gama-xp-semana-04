@@ -147,6 +147,10 @@ function pararContadorDeTempoAtivo() {
 }
 
 function atualizaEstatisticaDeSaiu() {
+
+    //TODO captura BACK
+    //TODO captura Windows.Close
+    
     ativo = 0;
     saiu += 1;
 
