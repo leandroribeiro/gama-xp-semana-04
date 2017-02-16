@@ -45,10 +45,10 @@ function getUrlParameter(name) {
     var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
     var results = regex.exec(location.search);
     return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
-};
+}
 
-function atualizarRegistroDeTransmissao(transmissaoID, userID, qtdDeixouPagina) {
-    firebase.database().ref('transmissao/' + transmissaoID).update(
+function atualizarRegistroDeTransmissao(transmissaoID, usuarioID, qtdDeixouPagina) {
+    firebase.database().ref('transmissao/' + transmissaoID + '/usuarios/' + usuarioID).update(
         {
             qtd_deixou_pagina: qtdDeixouPagina,
             tempo_transmissao: tempo,
@@ -57,16 +57,16 @@ function atualizarRegistroDeTransmissao(transmissaoID, userID, qtdDeixouPagina) 
 
 }
 
-function inserirRegistroDeTransmissao(transmissaoID, userID, inicioDaTransmissao) {
-    firebase.database().ref('transmissao/' + transmissaoID).set({
-        user_id: userID,
-        inicio_transmissao: inicioDaTransmissao,
-        qtd_deixou_pagina: 0,
-        tempo_transmissao: 0,
-        tempo_transmissao_ativa: 0
-    });
+function inserirRegistroDeTransmissao(transmissaoID, usuarioID, inicioDaTransmissao) {
+    firebase.database().ref('transmissao/' + transmissaoID + '/usuarios/' + usuarioID).set(
+        {
+            inicio_transmissao: inicioDaTransmissao,
+            qtd_deixou_pagina: 0,
+            tempo_transmissao: 0,
+            tempo_transmissao_ativa: 0
+        });
 
-};
+}
 
 function registrarInicioDaTransmissao() {
     var inicioDaTransmissao = new Date();
@@ -176,7 +176,7 @@ function comecarTransmissao() {
 
 configurarFirebase();
 
-if(getTransmissaoId()){
+if (getTransmissaoId()) {
     comecarTransmissao();
 }
 
