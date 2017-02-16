@@ -10,7 +10,10 @@
     <table id="transmissoes" border='1'>
         <tr>
             <th>Transmissão (ID)</th>
-            <th>Usuários (Qtd.)</th>
+            <th>Usuários Que Já Acessaram</th>
+            <th>Usuários Ativos</th>
+            <th>Usuários Ativos Na Mesma Aba</th>
+            <th>Usuários Logado</th>
         </tr>
     </table>
 
@@ -34,13 +37,27 @@
                 $('#transmissoes > tbody > tr:nth-child(n+2)').remove();
 
                 snapshot.forEach(function (data) {
-                    //console.log(data.val().usuarios);
-                    //console.log(Object.keys(data.val().usuarios).length);
-                    //console.log("The " + data.key + " dinosaur's score is " + data.val().usuarios.length);
 
                     var trHTML = '';
 
-                    trHTML += '<tr><td>' + data.key + '</td><td>' + Object.keys(data.val().usuarios).length + '</td></tr>';
+                    trHTML += '<tr>';
+                    trHTML += '<td>' + data.key + '</td>';
+                    trHTML += '<td>' + Object.keys(data.val().usuarios).length + '</td>';
+                    trHTML += '<td> N/A </td>';
+
+                    var usuariosAtivosAgora = $.grep(Object.values(data.val().usuarios), function (n, i) {
+                        return (n.ativo_agora === 1);
+                    });
+
+                    trHTML += '<td> ' + Object.keys(usuariosAtivosAgora).length + ' </td>';
+
+                    var usuariosLogados = $.grep(Object.values(data.val().usuarios), function (n, i) {
+                        return (n.logado === 1);
+                    });
+
+                    trHTML += '<td> ' + Object.keys(usuariosLogados).length + ' </td>';
+
+                    trHTML += '</tr>';
 
                     $('#transmissoes').append(trHTML);
                 });

@@ -1,19 +1,17 @@
 var userip;
 
 var tempo = new Number();
-
-// Tempo em segundos
 tempo = 0;
 
 var contadorDeTempoAtivo;
 var tempoAtivo = new Number();
-
 tempoAtivo = 0;
 
 var saiu = 0;
 var entrou = 0;
 
 var transmissaoId = 0;
+var ativo = 0;
 
 function configurarFirebase() {
     // Initialize Firebase
@@ -55,7 +53,10 @@ function atualizarRegistroDeTransmissao(transmissaoID, usuarioID, qtdDeixouPagin
         {
             qtd_deixou_pagina: qtdDeixouPagina,
             tempo_transmissao: tempo,
-            tempo_transmissao_ativa: tempoAtivo
+            tempo_transmissao_ativa: tempoAtivo,
+            tempo_transmissao_inativa: tempo - tempoAtivo,
+            ativo_agora: ativo,
+            logado: 0
         });
 
 }
@@ -67,7 +68,10 @@ function inserirRegistroDeTransmissao(transmissaoID, usuarioID, inicioDaTransmis
             inicio_transmissao: inicioDaTransmissao,
             qtd_deixou_pagina: 0,
             tempo_transmissao: 0,
-            tempo_transmissao_ativa: 0
+            tempo_transmissao_ativa: 0,
+            tempo_transmissao_inativa: 0,
+            ativo_agora: ativo,
+            logado: 0
         });
 
 }
@@ -143,7 +147,9 @@ function pararContadorDeTempoAtivo() {
 }
 
 function atualizaEstatisticaDeSaiu() {
+    ativo = 0;
     saiu += 1;
+
     $("#quantidadeVezesSaiu").attr('value', saiu);
 
     pararContadorDeTempoAtivo();
@@ -155,10 +161,17 @@ function atualizaEstatisticaDeSaiu() {
 }
 
 function atualizaEstatisticaDeEntrou() {
+    ativo = 1;
     entrou += 1;
+
     $("#quantidadeVezesEntrou").attr('value', entrou);
 
     iniciarContadorDeTempoAtivo();
+
+    var transmissaoID = getTransmissaoId();
+    var usuarioID = getUsuarioID();
+
+    atualizarRegistroDeTransmissao(transmissaoID, usuarioID, saiu);
 }
 
 function comecarTransmissao() {
@@ -168,6 +181,8 @@ function comecarTransmissao() {
 
     tempo = 0;
     tempoAtivo = 0;
+
+    ativo = 1;
 
     iniciarContador();
 

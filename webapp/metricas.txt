@@ -1,0 +1,4 @@
+Total de usuários que já acessaram a transmissão
+Total de usuários que estão ativos na transmissão
+Total de usuários que estão ativos e  na mesma aba
+Total de usuários anônimos
