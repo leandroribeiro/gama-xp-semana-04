@@ -8,6 +8,11 @@ var tempoAtivo = new Number();
 
 tempoAtivo = 0;
 
+var saiu = 0;
+var entrou = 0;
+
+var transmissaoId = 0;
+
 function configurarFirebase() {
     // Initialize Firebase
     var config = {
@@ -18,6 +23,20 @@ function configurarFirebase() {
         messagingSenderId: "435903866174"
     };
     firebase.initializeApp(config);
+}
+
+function getTransmissaoId() {
+
+    var parametro = getUrlParameter('transmissao');
+
+    if (parametro)
+        transmissaoId = getUrlParameter('transmissao');
+
+    return transmissaoId;
+}
+
+function getUsuarioID() {
+    return $("#userId").val();
 }
 
 // https://davidwalsh.name/query-string-javascript
@@ -52,8 +71,8 @@ function inserirRegistroDeTransmissao(streamId, userId, inicioDaTransmissao) {
 function registrarInicioDaTransmissao() {
     var inicioDaTransmissao = new Date();
 
-    var streamId = getUrlParameter('transmissaoId');
-    var userId = $("#userId").val();
+    var streamId = getTransmissaoId();
+    var userId = getUsuarioID();
 
     inserirRegistroDeTransmissao(streamId, userId, inicioDaTransmissao.toString());
 }
@@ -125,8 +144,8 @@ function atualizaEstatisticaDeSaiu() {
 
     pararContadorDeTempoAtivo();
 
-    var streamId = getUrlParameter('transmissaoId');
-    var userId = $("#userId").val();
+    var streamId = getTransmissaoId();
+    var userId = getUsuarioID();
 
     atualizarRegistroDeTransmissao(streamId, userId, saiu);
 }
@@ -138,18 +157,28 @@ function atualizaEstatisticaDeEntrou() {
     iniciarContadorDeTempoAtivo();
 }
 
-// Chama a função ao carregar a tela
-iniciarContador();
+function comecarTransmissao() {
 
-iniciarContadorDeTempoAtivo();
+    saiu = 0;
+    entrou = 0;
+
+    tempo = 0;
+    tempoAtivo = 0;
+
+    iniciarContador();
+
+    iniciarContadorDeTempoAtivo();
+
+    registrarInicioDaTransmissao();
+
+    $("#divTransmissao").show();
+}
 
 configurarFirebase();
 
-registrarInicioDaTransmissao();
-
-
-var saiu = 0;
-var entrou = 0;
+if(getTransmissaoId()){
+    comecarTransmissao();
+}
 
 //https://greensock.com/forums/topic/9059-cross-browser-to-detect-tab-or-window-is-active-so-animations-stay-in-sync-using-html5-visibility-api/
 
