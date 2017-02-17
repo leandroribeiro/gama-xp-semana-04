@@ -1,5 +1,205 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Netshow.me</title>
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!--Verde Gama = #91bf4e Verde = #83c325/#356a34  Azul Twitter= #1fa9e0 Ranking = #2d3142 -->
+
+    <style type="text/css">
+      .new-card{
+        padding: 2.5px 2.5px 2.5px 2.5px;
+        box-shadow: 2px 6px 9px rgba(0,0,0,.3);
+      }
+      .new-card-verde{
+        color: #FFF;
+        margin:  0px 0px 0px 0px;
+        padding: 2.5px 2.5px 2.5px 2.5px;
+        border: none;
+        box-shadow: 0px 0px 0px rgba(0,0,0,.3);
+      }
+      .gap-hr{
+        margin: 0.5px 0.5px 0.5px 0.5px;
+      }
+      .verde-gama-bakground{
+          background-color: #91bf4e;
+      }
+      .verde-secundario-bakground{
+        background-color: #356a34;
+      }
+
+    </style>
+
+  </head>
+  <body class="verde-gama-bakground">
+
+    <form>
+        <input type="hidden" id="quantidadeVezesSaiu" name="quantidadeVezesSaiu" value="" />
+        <input type="hidden" id="quantidadeVezesEntrou" name="quantidadeVezesEntrou" value="" />
+    </form>
+    <div class="container">
+
+      <div class="row">
+        <div class="col-md-7 col-md-offset-0">
+          <!-- <h3>Logo da Campanha (ex.: Harry Potter)</h3> -->
+          <img style=" height:100px; margin-top:10px; margin-bottom:20px;" src="images/logo-gama-branco.png" class="img-responsive" alt="Responsive image">
+        </div>
+        <div class="col-md-5 col-md-offset-0">
+          <div class="panel panel-default new-card-verde verde-secundario-bakground">
+            <div class="panel-body" >
+              <div class="row">
+                <div class="col-sm-12 col-sm-offset-0  " >
+                  <span >#GoGama</span>
+                </div>
+                <div class="col-sm-12 col-sm-offset-0" >
+                  <img src="images/twitter-azul.png" class="img-responsive" style="height:15px;  " align="left"  alt="Responsive image"> 2,2333</img>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12" >
+                  <!-- <hr class="gap-hr"> -->
+                </div>
+              </div>
+              <!-- <br> -->
+              <div class="row">
+                <div class="col-sm-12 col-sm-offset-0" >
+                  <span>Faça o login e compartilhe essa transmissão.</span>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-3 col-sm-offset-0" >
+                  <button type="button" class="btn btn-primary" name="button">Facebook</button>
+                </div>
+                <div class="col-sm-3 col-sm-offset-0" >
+                  <button type="button" class="btn btn-primary" name="button">LinkedIn</button>
+                </div>
+                <div class="col-sm-3 col-sm-offset-0" >
+                  <button type="button" class="btn btn-primary" name="button">Twitter</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-7 col-md-offset-0">
+
+          <!-- 4:3 aspect ratio -->
+          <div class="embed-responsive embed-responsive-4by3">
+            <!-- <iframe class="embed-responsive-item"  src="https://www.youtube.com/embed/ycPIaaKCyDQ" ></iframe> -->
+            <!-- <iframe class="embed-responsive-item" src=""></iframe> -->
+            <!-- <iframe width="560" height="315" src="https://www.youtube.com/embed/G0aSu0mXt6Y" frameborder="0" allowfullscreen></iframe> -->
+            <!-- <iframe  src="https://www.youtube.com/embed/HqNca1JPfFI" frameborder="0" allowfullscreen></iframe> -->
+            <!-- <iframe src="https://embed.spotify.com/?uri=spotify%3Auser%3Ajulioc98%3Aplaylist%3A3uEBrLy85D6OSAvZ7dA8Yt" width="300" height="380" frameborder="0" allowtransparency="true"></iframe> -->
+            <div id="divTransmissao" style="display: none;">
+
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/ycPIaaKCyDQ" frameborder="0" allowfullscreen></iframe>
+                <h3>Tempo de Transmissão : <span id="tempoDeTransmissao"></span></h3>
+                <h3>Tempo de Transmissão Ativo: <span id="tempoDeTransmissaoAtivo"></span></h3>
+
+
+            </div>
+          </div>
+
+        </div>
+        <div class="col-md-5 col-md-offset-0">
+
+          <div class="panel panel-default new-card ">
+            <div class="panel-body">
+              <div class="row">
+                <div class="col-xs-2" >
+                  <img src="images/twitter-azul.png" class="img-responsive" style="height:35px;width:40px;  margin-top:0px;"  alt="Responsive image">
+                </div>
+                <div class="col-xs-9">
+                  <div class="input-group">
+                    <input type="text" class="form-control" placeholder="140 Caracteres">
+                    <span class="input-group-btn">
+                      <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-send azul-twitter"></span></button>
+                    </span>
+                  </div><!-- /input-group -->
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12" >
+                  <hr >
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-2" >
+                  <img src="images/people1.jpeg" class="img-responsive thumbnail" style="height:40px; width:40px; margin-top:0px;"  alt="Responsive image">
+                </div>
+                <div class="col-xs-8">
+                    <a href="#"><span>Anna Luiza</span></a>
+                    <hr class="gap-hr">
+                    <h6>MUITO BOM!!!!</h6>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12" >
+                  <hr class="gap-hr">
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-2" >
+                  <img src="images/people2.jpg" class="img-responsive thumbnail" style="height:40px; width:40px; margin-top:0px;"  alt="Responsive image">
+                </div>
+                <div class="col-xs-8">
+                    <a href="#"><span>Julio Cesar</span></a>
+                    <hr class="gap-hr">
+                    <h6>Vou participar</h6>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12" >
+                  <hr class="gap-hr">
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-2" >
+                  <img src="images/people3.jpeg" class="img-responsive thumbnail" style="height:40px; width:40px; margin-top:0px;"  alt="Responsive image">
+                </div>
+                <div class="col-xs-8">
+                    <a href="#"><span>Bianca Silva</span></a>
+                    <hr class="gap-hr">
+                    <h6>Eu queroooooooo</h6>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    </div><!-- FIM DO CONTAINER -->
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/3.6.9/firebase.js"></script>
+    <script type="text/javascript" src="https://www.l2.io/ip.js?var=userip"></script>
+    <script src="app.js?v=5"></script>
+
+    <script type="text/javascript" >
+
+      //$('h1').html('Julio');
+
+    </script>
+  </body>
+</html>
+
+
+<!-- <!DOCTYPE html>
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
@@ -14,6 +214,8 @@
         <input type="hidden" id="quantidadeVezesSaiu" name="quantidadeVezesSaiu" value="" />
         <input type="hidden" id="quantidadeVezesEntrou" name="quantidadeVezesEntrou" value="" />
     </form>
+
+
 
     <div id="divTransmissao" style="display: none;">
 
@@ -31,4 +233,4 @@
         <script src="app.js?v=5"></script>
 </body>
 
-</html>
+</html> -->
