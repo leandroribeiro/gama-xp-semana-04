@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <table id="transmissoes" border='1'>
+        <tr>
+            <th>Transmissão (ID)</th>
+            <th>Usuários Que Já Acessaram</th>
+            <th>Usuários Ativos</th>
+            <th>Usuários Ativos Na Mesma Aba</th>
+            <th>Usuários Logado</th>
+        </tr>
+    </table>
+
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+        crossorigin="anonymous"></script>
+        <script src="https://www.gstatic.com/firebasejs/3.6.9/firebase.js"></script>
+        <script>
+            // Initialize Firebase
+            var config = {
+                apiKey: "AIzaSyCQKBE_vogjU_ZOq35w21OE25HYrlza5tU",
+                authDomain: "netshowme03.firebaseapp.com",
+                databaseURL: "https://netshowme03.firebaseio.com",
+                storageBucket: "netshowme03.appspot.com",
+                messagingSenderId: "435903866174"
+            };
+            firebase.initializeApp(config);
+
+            var starCountRef = firebase.database().ref('transmissao/');
+            starCountRef.on('value', function (snapshot) {
+
+                $('#transmissoes > tbody > tr:nth-child(n+2)').remove();
+
+                snapshot.forEach(function (data) {
+
+                    var trHTML = '';
+
+                    trHTML += '<tr>';
+                    trHTML += '<td>' + data.key + '</td>';
+                    trHTML += '<td>' + Object.keys(data.val().usuarios).length + '</td>';
+                    trHTML += '<td> N/A </td>';
+
+                    var usuariosAtivosAgora = $.grep(Object.values(data.val().usuarios), function (n, i) {
+                        return (n.ativo_agora === 1);
+                    });
+
+                    trHTML += '<td> ' + Object.keys(usuariosAtivosAgora).length + ' </td>';
+
+                    var usuariosLogados = $.grep(Object.values(data.val().usuarios), function (n, i) {
+                        return (n.logado === 1);
+                    });
+
+                    trHTML += '<td> ' + Object.keys(usuariosLogados).length + ' </td>';
+
+                    trHTML += '</tr>';
+
+                    $('#transmissoes').append(trHTML);
+                });
+
+            });
+        </script>
+
+
+
+</body>
+
+</html>
