@@ -69,7 +69,7 @@ function atualizarRegistroDeTransmissao(transmissaoID, usuarioID, qtdDeixouPagin
             tempo_transmissao: tempo,
             tempo_transmissao_ativa: tempoAtivo,
             tempo_transmissao_inativa: tempo - tempoAtivo,
-            na_pagina: ativo,
+            na_pagina: (ativo>0),
             logado: 0
         });
 
@@ -80,7 +80,7 @@ function inicializerTransmissao(transmissaoID){
     var agora = new Date();
     firebase.database().ref('stream/' + transmissaoID).set(
         {
-            comeco_transmissao: agora.getTime(),
+            comeco_transmissao: agora.getTime() + 0.001,
             facebook: 100,
             instragram: 500,
             linkedin: 500,
@@ -97,7 +97,7 @@ function inserirRegistroDeTransmissao(transmissaoID, usuarioID, inicioDaTransmis
             tempo_transmissao: 0,
             tempo_transmissao_ativa: 0,
             tempo_transmissao_inativa: 0,
-            na_pagina: ativo,
+            na_pagina: (ativo>0),
             logado: 0
         });
 
@@ -108,7 +108,7 @@ function registrarInicioDaTransmissao() {
 
     var streamId = getTransmissaoId();
     var userId = getUsuarioID();
-    var dat1 = inicioDaTransmissao.getTime();
+    var dat1 = inicioDaTransmissao.getTime() + 0.001;
 
     inserirRegistroDeTransmissao(streamId, userId, dat1);
 }
