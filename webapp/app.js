@@ -15,6 +15,7 @@ var ativo = 0;
 
 function configurarFirebase() {
     // Initialize Firebase
+    /*
     var config = {
         apiKey: "AIzaSyCQKBE_vogjU_ZOq35w21OE25HYrlza5tU",
         authDomain: "netshowme03.firebaseapp.com",
@@ -23,7 +24,19 @@ function configurarFirebase() {
         messagingSenderId: "435903866174"
     };
     firebase.initializeApp(config);
+*/
+
+    var config = {
+        apiKey: "AIzaSyAS8sdT0w7mavmHnmrHKPj0yb7232UsDrQ",
+        authDomain: "nsdashboard-9d6fe.firebaseapp.com",
+        databaseURL: "https://nsdashboard-9d6fe.firebaseio.com",
+        storageBucket: "nsdashboard-9d6fe.appspot.com",
+        messagingSenderId: "395067245358"
+    };
 }
+
+
+
 
 function getTransmissaoId() {
 
@@ -151,7 +164,7 @@ function atualizaEstatisticaDeSaiu() {
 
     //TODO captura BACK
     //TODO captura Windows.Close
-    
+
     ativo = 0;
     saiu += 1;
 
