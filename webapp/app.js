@@ -49,28 +49,28 @@ function getUrlParameter(name) {
 }
 
 function atualizarRegistroDeTransmissao(transmissaoID, usuarioID, qtdDeixouPagina) {
-    firebase.database().ref('transmissao/' + transmissaoID + '/usuarios/' + usuarioID).update(
+    firebase.database().ref('stream/' + transmissaoID + '/users/' + usuarioID).update(
         {
             qtd_deixou_pagina: qtdDeixouPagina,
             tempo_transmissao: tempo,
             tempo_transmissao_ativa: tempoAtivo,
             tempo_transmissao_inativa: tempo - tempoAtivo,
-            ativo_agora: ativo,
+            na_pagina: ativo,
             logado: 0
         });
 
 }
 
 function inserirRegistroDeTransmissao(transmissaoID, usuarioID, inicioDaTransmissao) {
-    firebase.database().ref('transmissao/' + transmissaoID + '/usuarios/' + usuarioID).set(
+    firebase.database().ref('stream/' + transmissaoID + '/users/' + usuarioID).set(
         {
             ip: userip,
-            inicio_transmissao: inicioDaTransmissao,
+            entrada: inicioDaTransmissao,
             qtd_deixou_pagina: 0,
             tempo_transmissao: 0,
             tempo_transmissao_ativa: 0,
             tempo_transmissao_inativa: 0,
-            ativo_agora: ativo,
+            na_pagina: ativo,
             logado: 0
         });
 
@@ -81,8 +81,9 @@ function registrarInicioDaTransmissao() {
 
     var streamId = getTransmissaoId();
     var userId = getUsuarioID();
+    var dat1 = inicioDaTransmissao.getTime();
 
-    inserirRegistroDeTransmissao(streamId, userId, inicioDaTransmissao.toString());
+    inserirRegistroDeTransmissao(streamId, userId, dat1);
 }
 
 function iniciarContador() {
