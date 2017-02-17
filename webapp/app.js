@@ -80,7 +80,7 @@ function atualizarRegistroDeTransmissao(transmissaoID, usuarioID, qtdDeixouPagin
 function inicializerTransmissao(transmissaoID){
 
     var agora = new Date();
-    firebase.database().ref('stream/' + transmissaoID).set(
+    firebase.database().ref('stream/' + transmissaoID).update(
         {
             comeco_transmissao: agora.getTime() + 0.001,
             facebook: 100,
