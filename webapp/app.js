@@ -15,6 +15,7 @@ var ativo = 0;
 
 function configurarFirebase() {
     // Initialize Firebase
+    /*
     var config = {
         apiKey: "AIzaSyCQKBE_vogjU_ZOq35w21OE25HYrlza5tU",
         authDomain: "netshowme03.firebaseapp.com",
@@ -23,7 +24,20 @@ function configurarFirebase() {
         messagingSenderId: "435903866174"
     };
     firebase.initializeApp(config);
+*/
+
+    var config = {
+        apiKey: "AIzaSyAS8sdT0w7mavmHnmrHKPj0yb7232UsDrQ",
+        authDomain: "nsdashboard-9d6fe.firebaseapp.com",
+        databaseURL: "https://nsdashboard-9d6fe.firebaseio.com",
+        storageBucket: "nsdashboard-9d6fe.appspot.com",
+        messagingSenderId: "395067245358"
+    };
+    firebase.initializeApp(config);
 }
+
+
+
 
 function getTransmissaoId() {
 
@@ -49,29 +63,46 @@ function getUrlParameter(name) {
 }
 
 function atualizarRegistroDeTransmissao(transmissaoID, usuarioID, qtdDeixouPagina) {
-    firebase.database().ref('transmissao/' + transmissaoID + '/usuarios/' + usuarioID).update(
+    firebase.database().ref('stream/' + transmissaoID + '/users/' + usuarioID).update(
         {
+            na_pagina: (ativo>0)
+            /*
             qtd_deixou_pagina: qtdDeixouPagina,
             tempo_transmissao: tempo,
             tempo_transmissao_ativa: tempoAtivo,
-            tempo_transmissao_inativa: tempo - tempoAtivo,
-            ativo_agora: ativo,
+            tempo_transmissao_inativa: tempo - tempoAtivo,            
             logado: 0
+            */
         });
 
 }
 
-function inserirRegistroDeTransmissao(transmissaoID, usuarioID, inicioDaTransmissao) {
-    firebase.database().ref('transmissao/' + transmissaoID + '/usuarios/' + usuarioID).set(
+function inicializerTransmissao(transmissaoID){
+
+    var agora = new Date();
+    firebase.database().ref('stream/' + transmissaoID).update(
         {
+            comeco_transmissao: agora.getTime() + 0.001,
+            facebook: 100,
+            instagram: 500,
+            linkedin: 500,
+            twitter: 5200            
+        });
+}
+
+function inserirRegistroDeTransmissao(transmissaoID, usuarioID, inicioDaTransmissao) {
+    firebase.database().ref('stream/' + transmissaoID + '/users/' + usuarioID).set(
+        {            
+            entrada: inicioDaTransmissao,
+            na_pagina: (ativo>0)
+            /*
             ip: userip,
-            inicio_transmissao: inicioDaTransmissao,
             qtd_deixou_pagina: 0,
             tempo_transmissao: 0,
             tempo_transmissao_ativa: 0,
-            tempo_transmissao_inativa: 0,
-            ativo_agora: ativo,
+            tempo_transmissao_inativa: 0,            
             logado: 0
+            */
         });
 
 }
@@ -81,8 +112,9 @@ function registrarInicioDaTransmissao() {
 
     var streamId = getTransmissaoId();
     var userId = getUsuarioID();
+    var dat1 = inicioDaTransmissao.getTime() + 0.001;
 
-    inserirRegistroDeTransmissao(streamId, userId, inicioDaTransmissao.toString());
+    inserirRegistroDeTransmissao(streamId, userId, dat1);
 }
 
 function iniciarContador() {
@@ -150,7 +182,7 @@ function atualizaEstatisticaDeSaiu() {
 
     //TODO captura BACK
     //TODO captura Windows.Close
-    
+
     ativo = 0;
     saiu += 1;
 
@@ -191,6 +223,8 @@ function comecarTransmissao() {
     iniciarContador();
 
     iniciarContadorDeTempoAtivo();
+
+    inicializerTransmissao(getTransmissaoId());
 
     registrarInicioDaTransmissao();
 
