@@ -1,0 +1,4 @@
+[submodule "NSDashboard"]
+path = NSDashboard
+url = git@edvmorango:NSDashboard
+
