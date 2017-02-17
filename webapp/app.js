@@ -65,12 +65,14 @@ function getUrlParameter(name) {
 function atualizarRegistroDeTransmissao(transmissaoID, usuarioID, qtdDeixouPagina) {
     firebase.database().ref('stream/' + transmissaoID + '/users/' + usuarioID).update(
         {
+            na_pagina: (ativo>0)
+            /*
             qtd_deixou_pagina: qtdDeixouPagina,
             tempo_transmissao: tempo,
             tempo_transmissao_ativa: tempoAtivo,
-            tempo_transmissao_inativa: tempo - tempoAtivo,
-            na_pagina: (ativo>0),
+            tempo_transmissao_inativa: tempo - tempoAtivo,            
             logado: 0
+            */
         });
 
 }
@@ -82,7 +84,7 @@ function inicializerTransmissao(transmissaoID){
         {
             comeco_transmissao: agora.getTime() + 0.001,
             facebook: 100,
-            instragram: 500,
+            instagram: 500,
             linkedin: 500,
             twitter: 5200            
         });
@@ -90,15 +92,17 @@ function inicializerTransmissao(transmissaoID){
 
 function inserirRegistroDeTransmissao(transmissaoID, usuarioID, inicioDaTransmissao) {
     firebase.database().ref('stream/' + transmissaoID + '/users/' + usuarioID).set(
-        {
-            ip: userip,
+        {            
             entrada: inicioDaTransmissao,
+            na_pagina: (ativo>0)
+            /*
+            ip: userip,
             qtd_deixou_pagina: 0,
             tempo_transmissao: 0,
             tempo_transmissao_ativa: 0,
-            tempo_transmissao_inativa: 0,
-            na_pagina: (ativo>0),
+            tempo_transmissao_inativa: 0,            
             logado: 0
+            */
         });
 
 }
