@@ -33,6 +33,7 @@ function configurarFirebase() {
         storageBucket: "nsdashboard-9d6fe.appspot.com",
         messagingSenderId: "395067245358"
     };
+    firebase.initializeApp(config);
 }
 
 
@@ -72,6 +73,19 @@ function atualizarRegistroDeTransmissao(transmissaoID, usuarioID, qtdDeixouPagin
             logado: 0
         });
 
+}
+
+function inicializerTransmissao(transmissaoID){
+
+    var agora = new Date();
+    firebase.database().ref('stream/' + transmissaoID).set(
+        {
+            comeco_transmissao: agora.getTime(),
+            facebook: 100,
+            instragram: 500,
+            linkedin: 500,
+            twitter: 5200            
+        });
 }
 
 function inserirRegistroDeTransmissao(transmissaoID, usuarioID, inicioDaTransmissao) {
@@ -205,6 +219,8 @@ function comecarTransmissao() {
     iniciarContador();
 
     iniciarContadorDeTempoAtivo();
+
+    inicializerTransmissao(getTransmissaoId());
 
     registrarInicioDaTransmissao();
 
